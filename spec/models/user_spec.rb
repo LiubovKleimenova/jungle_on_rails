@@ -22,6 +22,7 @@ RSpec.describe User, type: :model do
         password_confirmation: 'pq123'
       )
       expect(@user).to_not be_valid
+       expect(@user.errors.full_messages[0]).to include("doesn't match")
     end
 
     it 'refuses to create a user without password or confirmation' do
