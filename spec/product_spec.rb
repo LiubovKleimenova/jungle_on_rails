@@ -8,12 +8,25 @@ RSpec.describe Product, type: :model do
       expect(@product.name).to be_nil
     end
   
-    it 'checks if there is a name' do
+    it 'ensures that a product with all four fields set will indeed save successfully' do
       @category = Category.create(name: 'Apparel')
-      @category.save!
       @product = Product.create(name: 'backpack', category: @category, quantity: 1, price: 200)
       @product.save!
       expect(@product).to be_valid
     end
+
+    it 'ensures that it throws an error Name cant be blank without a name' do
+      @category = Category.create(name: 'Apparel')
+      @product = Product.create(name: nil, category: @category, quantity: 1, price: 200)
+      expect(@product.errors.full_messages[0]).to eq "Name can't be blank"
+    end
+
+    it 'ensures that it throws an error Quantity cant be blank without a qantity' do
+      @category = Category.create(name: 'Apparel')
+      @product = Product.create(name: 'backpack', category: @category, quantity: nil, price: 200)
+      expect(@product.errors.full_messages[0]).to eq "Quantity can't be blank"
+    end
+
+
   end
 end
