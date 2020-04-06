@@ -35,7 +35,7 @@ RSpec.describe User, type: :model do
       expect(@user).to_not be_valid
     end
 
-    it 'refuses to create a user without name' do
+    it 'ensures user has a name' do
       @user = User.new(
         first_name: nil,
         last_name: 'lastName',
@@ -47,7 +47,7 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages[0]).to include("can't be blank")
     end
 
-    it 'refuses to create a user without last name' do
+    it 'ensures user has a last name' do
       @user = User.new(
         first_name: 'Nil',
         last_name: nil,
@@ -78,6 +78,19 @@ RSpec.describe User, type: :model do
       )
       expect(@user2).to_not be_valid
       expect(@user2.errors.full_messages[0]).to eq("Email has already been taken")
+    end
+
+    it 'ensures that password is long enough' do
+      @user = User.new(
+        first_name: 'Nil',
+        last_name: "nilovich",
+        email: 'user@mail.com',
+        password: '123',
+        password_confirmation: '123'
+      )
+      expect(@user).to_not be_valid
+      expect(@user.errors.full_messages[0]).to eq("Password is too short (minimum is 4 characters)")
+      #expect(@user.errors.full_messages[0]).to include("can't be blank")
     end
   end
   #pending "add some examples to (or delete) #{__FILE__}"
