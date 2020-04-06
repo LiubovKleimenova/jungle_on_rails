@@ -28,7 +28,6 @@ RSpec.describe Product, type: :model do
     end
 
     it 'ensures that it throws an error Category cant be blank without a category' do
-      #@category = Category.create(name: 'Apparel')
       @product = Product.create(name: 'backpack', category: nil, quantity: 2, price: 200)
       expect(@product.errors.full_messages[0]).to eq "Category can't be blank"
     end
