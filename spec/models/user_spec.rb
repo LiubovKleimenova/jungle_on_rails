@@ -60,16 +60,24 @@ RSpec.describe User, type: :model do
     end
 
     it 'refuses to create a user with the email that already exists' do
-      @email = User.find(1).email
-      @user = User.new(
+      @user1 = User.new(
         first_name: 'Nil',
-        last_name: nil,
-        email: @email,
+        last_name: "Lst",
+        email: 'email@email.com',
         password: 'nil123',
         password_confirmation: 'nil123'
       )
-      expect(@user).to be_valid
-      
+      @user1.save!
+
+      @user2 = User.new(
+        first_name: 'Nil',
+        last_name: "name",
+        email: 'emaiL@email.com',
+        password: 'nil123',
+        password_confirmation: 'nil123'
+      )
+      expect(@user2).to_not be_valid
+      expect(@user2.errors.full_messages[0]).to eq("Email has already been taken")
     end
   end
   #pending "add some examples to (or delete) #{__FILE__}"
