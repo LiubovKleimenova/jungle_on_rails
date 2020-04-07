@@ -105,12 +105,32 @@ RSpec.describe User, type: :model do
         password_confirmation: '12345'
       )
       
-      
-      
-      #User.authenticate_with_credentials('user@mail.com', '12345')
       expect(User.authenticate_with_credentials('user@mail.com', '12345')).to eq(@user)
+    end
+
+    it 'logs in user with correct email in uppercase' do
+      @user = User.create(
+        first_name: 'Nil',
+        last_name: "nilovich",
+        email: 'user@mail.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      
+      expect(User.authenticate_with_credentials('USER@mail.com', '12345')).to eq(@user)
+    end
+
+    it 'logs in user with correct email and spaces' do
+      @user = User.create(
+        first_name: 'Nil',
+        last_name: "nilovich",
+        email: 'user@mail.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      
+      expect(User.authenticate_with_credentials(' user@mail.com ', '12345')).to eq(@user)
     end
   end
 
-  #pending "add some examples to (or delete) #{__FILE__}"
 end
