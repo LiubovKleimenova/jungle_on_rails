@@ -97,18 +97,18 @@ RSpec.describe User, type: :model do
 
   describe '.authenticate_with_credentials' do
     it 'redirects user with correct password to main page' do
-      @user = User.new(
+      @user = User.create(
         first_name: 'Nil',
         last_name: "nilovich",
         email: 'user@mail.com',
         password: '12345',
         password_confirmation: '12345'
       )
-      user.save!
       
       
-      #@user.authenticate_with_credentials('user@mail.com', '12345')
-      expect(@user.authenticate_with_credentials('user@mail.com', '12345')).to redirect_to('/')
+      
+      #User.authenticate_with_credentials('user@mail.com', '12345')
+      expect(User.authenticate_with_credentials('user@mail.com', '12345')).to eq(@user)
     end
   end
 
