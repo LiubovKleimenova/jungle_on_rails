@@ -94,5 +94,23 @@ RSpec.describe User, type: :model do
       #expect(@user.errors.full_messages[0]).to include("can't be blank")
     end
   end
+
+  describe '.authenticate_with_credentials' do
+    it 'redirects user with correct password to main page' do
+      @user = User.new(
+        first_name: 'Nil',
+        last_name: "nilovich",
+        email: 'user@mail.com',
+        password: '12345',
+        password_confirmation: '12345'
+      )
+      user.save!
+      
+      
+      #@user.authenticate_with_credentials('user@mail.com', '12345')
+      expect(@user.authenticate_with_credentials('user@mail.com', '12345')).to redirect_to('/')
+    end
+  end
+
   #pending "add some examples to (or delete) #{__FILE__}"
 end
